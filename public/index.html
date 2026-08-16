@@ -6,6 +6,22 @@
   <meta name="description" content="APRLで支持されたCharacter形成メカニズムを、人間が体験・観察するための最小アプリ">
   <title>APRL Character App</title>
   <link rel="stylesheet" href="/styles.css">
+  <style>
+    .diagnostic-panel { margin-top:28px; }
+    .diagnostic-question>span,.diagnostic-comment>span { display:block; font-size:14px; font-weight:750; margin-bottom:10px; line-height:1.6; }
+    .diagnostic-question small { display:block; margin-top:8px; color:#8a8278; }
+    .diagnostic-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; margin-top:20px; }
+    .diagnostic-character { border:1px solid #ddd7cf; border-radius:14px; padding:16px; background:rgba(255,255,255,.55); }
+    .diagnostic-character>p { margin:7px 0 14px; color:#6c655d; font-size:13px; }
+    .diagnostic-character>span { display:block; margin-bottom:8px; font-size:12px; color:#766e64; }
+    .diagnostic-score-row { display:grid; grid-template-columns:88px 1fr; gap:10px; align-items:center; margin-top:8px; font-size:12px; }
+    .diagnostic-score-buttons { display:flex; gap:5px; }
+    .diagnostic-score-buttons button { width:31px; height:31px; border-radius:50%; border:1px solid #d2ccc3; background:#fff; }
+    .diagnostic-score-buttons button.selected { background:#171717; color:#fff; border-color:#171717; }
+    .diagnostic-comment { display:block; margin-top:20px; }
+    .diagnostic-comment textarea { width:100%; resize:vertical; border:1px solid #d2cbc2; border-radius:12px; padding:12px; font:inherit; line-height:1.6; background:#fff; color:#171717; }
+    @media (max-width:760px) { .diagnostic-grid { grid-template-columns:1fr; } }
+  </style>
 </head>
 <body>
   <main class="app-shell">
@@ -64,7 +80,17 @@
         <button id="save-rating" class="primary-button" type="button" disabled>手触りをローカル保存</button>
         <button id="export-ratings" class="subtle-button" type="button">評価JSONを書き出す</button>
       </div>
-      <p class="privacy-note">評価はブラウザ内だけに保存します。Lab Viewを先に開いた場合も記録されます。</p>
+      <p class="privacy-note">評価はブラウザ内だけに保存します。Blind Handfeelを守るため、保存するまでLab Viewは開けません。</p>
+    </section>
+
+    <section id="diagnostic" class="panel diagnostic-panel hidden">
+      <div class="section-heading"><div><p class="eyebrow">Diagnostic Observation</p><h2>人間が感じた意味と内部表現のズレを残す</h2></div><span class="stage-chip">Semantic-Score Consistency</span></div>
+      <p class="privacy-note">Handfeel保存後にLab Viewを開いたときだけ表示します。研究のconfirmatory判定とは分離した探索的な観察記録です。</p>
+      <div id="diagnostic-body"></div>
+      <div class="action-row">
+        <button id="save-diagnostic" class="primary-button" type="button" disabled>診断をローカル保存</button>
+        <button id="export-diagnostics" class="subtle-button" type="button">診断JSONを書き出す</button>
+      </div>
     </section>
 
     <section class="panel evidence-panel">
