@@ -1,0 +1,12 @@
+{
+  "name": "aprl-character-app",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "node --watch server/index.mjs",
+    "start": "node server/index.mjs",
+    "check": "node --check server/index.mjs && node --check server/openai-provider.mjs && node --check server/storage.mjs && node --check server/study-design.mjs && node --check public/app.js"
+  },
+  "engines": { "node": ">=22" }
+}

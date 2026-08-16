@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="APRLで支持されたCharacter形成メカニズムを、人間が体験・観察するための最小アプリ">
+  <title>APRL Character App</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <main class="app-shell">
+    <header class="hero">
+      <div>
+        <p class="eyebrow">APRL Character App · MVP v0.1</p>
+        <h1>Characterの違いは、<br>本当に感じられるか。</h1>
+        <p class="hero-copy">APRLの実験で支持された／一部支持された形成メカニズムを、一つずつ人間の「手触り」で確かめます。</p>
+      </div>
+      <div class="hero-note">
+        <strong>MVPの境界</strong>
+        <span>Temperament → Perception</span>
+        <span>VB / Trust → Experience</span>
+        <span>Response・状態更新はまだ実装しない</span>
+      </div>
+    </header>
+
+    <nav id="lens-tabs" class="lens-tabs" aria-label="MVP Lens"></nav>
+
+    <section class="panel lens-panel">
+      <div class="section-heading">
+        <div><p id="lens-eyebrow" class="eyebrow"></p><h2 id="lens-title"></h2></div>
+        <div class="heading-actions"><span id="lens-stage" class="stage-chip"></span><button id="view-toggle" class="subtle-button" type="button">Lab View</button></div>
+      </div>
+
+      <div id="variant-wrap" class="variant-wrap hidden">
+        <span class="control-label">比較する気質軸</span>
+        <div id="variant-buttons" class="segmented"></div>
+        <p id="variant-note" class="control-note"></p>
+      </div>
+
+      <div class="situation-block">
+        <div class="control-label-row"><span class="control-label">固定Situation</span><span>最初は研究条件を崩さない3例だけ</span></div>
+        <div id="presets" class="preset-list"></div>
+        <div id="situation" class="situation-text"></div>
+        <div id="fixed-perception" class="fixed-perception hidden"><span>固定Perception</span><p id="fixed-perception-text"></p></div>
+      </div>
+
+      <div class="action-row">
+        <button id="generate" class="primary-button" type="button">比較を生成</button>
+        <span class="cost-note">1比較 = 最大1 API call。同条件はローカルキャッシュ。</span>
+      </div>
+      <p id="error" class="error-message hidden"></p>
+      <p id="run-meta" class="run-meta hidden"></p>
+    </section>
+
+    <section>
+      <div class="section-heading character-heading"><div><p class="eyebrow">Character View</p><h2>まず説明を見ずに、違いを感じる</h2></div></div>
+      <div id="characters" class="character-grid"></div>
+    </section>
+
+    <section id="handfeel" class="panel handfeel-panel hidden">
+      <div class="section-heading"><div><p class="eyebrow">Handfeel</p><h2>研究結果がCharacter差として知覚できるか</h2></div></div>
+      <div id="handfeel-body"></div>
+      <div class="action-row">
+        <button id="save-rating" class="primary-button" type="button" disabled>手触りをローカル保存</button>
+        <button id="export-ratings" class="subtle-button" type="button">評価JSONを書き出す</button>
+      </div>
+      <p class="privacy-note">評価はブラウザ内だけに保存します。Lab Viewを先に開いた場合も記録されます。</p>
+    </section>
+
+    <section class="panel evidence-panel">
+      <div class="section-heading"><div><p class="eyebrow">Evidence Registry</p><h2>アプリへ入れてよいメカニズム</h2></div></div>
+      <div id="evidence" class="evidence-list"></div>
+    </section>
+
+    <footer><p>Research evidence decides what the app may simulate. The app asks whether the evidence becomes perceptible as Character.</p></footer>
+  </main>
+  <script type="module" src="/app.js"></script>
+</body>
+</html>
