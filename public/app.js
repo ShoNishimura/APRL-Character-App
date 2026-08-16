@@ -182,8 +182,14 @@ function renderHandfeel() {
     state.ratings.identification = button.dataset.identify; renderHandfeel();
   }));
 
+  if (state.saved) {
+    $('handfeel-body').querySelectorAll('button').forEach((button) => {
+      button.disabled = true;
+    });
+  }
+
   const complete = state.ratings.differenceStrength && state.ratings.naturalness && state.ratings.identification;
-  $('save-rating').disabled = !complete;
+  $('save-rating').disabled = state.saved || !complete;
   $('save-rating').textContent = state.saved ? '保存済み' : '手触りをローカル保存';
 }
 
@@ -243,11 +249,17 @@ function renderDiagnostic() {
     $('save-diagnostic').textContent = '診断をローカル保存';
   });
 
+  if (state.diagnosticSaved) {
+    $('diagnostic-body').querySelectorAll('button, textarea').forEach((control) => {
+      control.disabled = true;
+    });
+  }
+
   const temperamentScoresComplete = state.lensId !== 'temperament' || mismatch !== true || ['A','B'].every((label) => {
     const scores = state.diagnostic.humanScores[label];
     return scores.opportunity !== null && scores.danger !== null;
   });
-  $('save-diagnostic').disabled = mismatch === null || !temperamentScoresComplete;
+  $('save-diagnostic').disabled = state.diagnosticSaved || mismatch === null || !temperamentScoresComplete;
   $('save-diagnostic').textContent = state.diagnosticSaved ? '診断保存済み' : '診断をローカル保存';
 }
 
@@ -266,6 +278,7 @@ function diagnosticRepresentation() {
 }
 
 function saveDiagnostic() {
+  if (state.diagnosticSaved) return;
   const rows = loadDiagnostics();
   rows.push({
     id: crypto.randomUUID(), createdAt: new Date().toISOString(),
@@ -335,6 +348,7 @@ function identificationResult() {
 }
 
 function saveRatings() {
+  if (state.saved) return;
   const ident = identificationResult();
   const rows = loadRatings();
   rows.push({
