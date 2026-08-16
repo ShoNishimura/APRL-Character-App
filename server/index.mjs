@@ -2,7 +2,7 @@ import { createServer } from 'node:http';
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { generateWithOpenAI } from './openai-provider.mjs';
+import { generateWithOpenAI, scoreTemperamentPerceptionWithOpenAI } from './openai-provider.mjs';
 import { getPublicDesign, getRunSpec } from './study-design.mjs';
 import { assertAndIncrementDailyLimit, getCached, makeCacheKey, setCached } from './storage.mjs';
 
@@ -63,6 +63,52 @@ function validateRunRequest(input) {
   return getRunSpec(input);
 }
 
+
+function validateSeparateScoreRequest(input) {
+  const runSpec = validateRunRequest(input);
+
+  if (runSpec.lensId !== 'temperament') {
+    throw new Error('Separate scoring is only available for Temperament Lens.');
+  }
+
+  if (!Array.isArray(input.results) || input.results.length !== 2) {
+    throw new Error('Separate scoring results are invalid.');
+  }
+
+  const expectedIds = new Set(runSpec.conditions.map((condition) => condition.id));
+  const seen = new Set();
+
+  const results = input.results.map((item) => {
+    if (
+      !item ||
+      typeof item.conditionId !== 'string' ||
+      !expectedIds.has(item.conditionId) ||
+      seen.has(item.conditionId)
+    ) {
+      throw new Error('Separate scoring conditionId is invalid.');
+    }
+
+    if (
+      typeof item.surfaceText !== 'string' ||
+      typeof item.perception?.summary !== 'string'
+    ) {
+      throw new Error('Separate scoring Perception text is invalid.');
+    }
+
+    seen.add(item.conditionId);
+
+    return {
+      conditionId: item.conditionId,
+      surfaceText: item.surfaceText,
+      perception: {
+        summary: item.perception.summary
+      }
+    };
+  });
+
+  return { runSpec, results };
+}
+
 async function handleRun(req, res) {
   try {
     const runSpec = validateRunRequest(await readJsonBody(req));
@@ -81,6 +127,68 @@ async function handleRun(req, res) {
     console.error(error);
     const message = error instanceof Error ? error.message : '予期しないエラーが発生しました。';
     const status = /未知|不正|request too large/.test(message) ? 400 : 500;
+    return sendJson(res, status, { error: message });
+  }
+}
+
+
+async function handleSeparateScore(req, res) {
+  try {
+    const { runSpec, results } =
+      validateSeparateScoreRequest(await readJsonBody(req));
+
+    const cacheKey = makeCacheKey({
+      version: appVersion,
+      kind: 'separate-temperament-score-v1',
+      model,
+      scenarioId: runSpec.scenario.id,
+      results
+    });
+
+    const cached = await getCached(cacheKey);
+
+    if (cached) {
+      return sendJson(res, 200, {
+        ...cached,
+        cacheHit: true
+      });
+    }
+
+    const apiKey = process.env.OPENAI_API_KEY;
+
+    if (!apiKey) {
+      return sendJson(res, 503, {
+        error: 'OPENAI_API_KEY is not configured.'
+      });
+    }
+
+    await assertAndIncrementDailyLimit(maxDailyCalls);
+
+    const scored = await scoreTemperamentPerceptionWithOpenAI({
+      apiKey,
+      model,
+      runSpec,
+      results
+    });
+
+    await setCached(cacheKey, scored);
+
+    return sendJson(res, 200, {
+      ...scored,
+      cacheHit: false
+    });
+  } catch (error) {
+    console.error(error);
+
+    const message =
+      error instanceof Error
+        ? error.message
+        : 'Unexpected separate scoring error.';
+
+    const status = /invalid|only available|requires exactly/i.test(message)
+      ? 400
+      : 500;
+
     return sendJson(res, status, { error: message });
   }
 }
@@ -113,6 +221,7 @@ const server = createServer(async (req, res) => {
   if (req.method === 'GET' && req.url === '/api/health') return sendJson(res, 200, { ok: true, appVersion, model, maxDailyCalls, apiKeyConfigured: Boolean(process.env.OPENAI_API_KEY) });
   if (req.method === 'GET' && req.url === '/api/design') return sendJson(res, 200, getPublicDesign());
   if (req.method === 'POST' && req.url === '/api/run') return handleRun(req, res);
+  if (req.method === 'POST' && req.url === '/api/score-perception') return handleSeparateScore(req, res);
   if (req.method === 'GET' || req.method === 'HEAD') return serveStatic(req, res);
   res.writeHead(405); res.end('Method not allowed');
 });

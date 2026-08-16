@@ -17,7 +17,10 @@ const state = {
     },
     comment: ''
   },
-  diagnosticSaved: false
+  diagnosticSaved: false,
+  separateScore: null,
+  separateScoreLoading: false,
+  separateScoreError: null
 };
 
 const $ = (id) => document.getElementById(id);
@@ -46,6 +49,9 @@ function resetRun() {
   state.labEverViewed = false;
   state.ratings = { differenceStrength: null, naturalness: null, identification: null };
   state.saved = false;
+  state.separateScore = null;
+  state.separateScoreLoading = false;
+  state.separateScoreError = null;
   resetDiagnosticState();
   $('handfeel').classList.add('hidden');
   $('diagnostic').classList.add('hidden');
@@ -116,11 +122,39 @@ function conditionDetail(conditionId) {
   return currentVariant().conditions.find((item) => item.id === conditionId);
 }
 
+
+function separateScoreFor(conditionId) {
+  return state.separateScore?.scores?.find(
+    (item) => item.conditionId === conditionId
+  ) ?? null;
+}
+
 function renderConditionLab(condition, result) {
   if (state.lensId === 'temperament') {
+    const separate = separateScoreFor(condition.id);
+
+    let separateHtml = '';
+
+    if (state.separateScoreLoading) {
+      separateHtml = `<div class="lab-block"><span class="lab-label">Separate-pass rating</span><p>Scoring the same Perception in a separate blind API call...</p></div>`;
+    } else if (state.separateScoreError) {
+      separateHtml = `<div class="lab-block"><span class="lab-label">Separate-pass rating</span><p>${escapeHtml(state.separateScoreError)}</p></div>`;
+    } else if (separate) {
+      separateHtml = `<div class="lab-block">
+        <span class="lab-label">Separate-pass rating</span>
+        ${meter('Opportunity', separate.opportunitySalience)}
+        ${meter('Danger', separate.dangerSalience)}
+        <p>${escapeHtml(separate.rationale)}</p>
+      </div>`;
+    } else {
+      separateHtml = `<div class="lab-block"><span class="lab-label">Separate-pass rating</span><p>Separate scoring starts when Lab View opens.</p></div>`;
+    }
+
     return `<div class="lab-details">
       <div class="lab-block"><span class="lab-label">Manipulated state</span><p>S: <strong>${escapeHtml(condition.temperament.seeking)}</strong> / N: <strong>${escapeHtml(condition.temperament.negative)}</strong></p></div>
-      <div class="lab-block"><span class="lab-label">Perception</span><p>${escapeHtml(result.perception.summary)}</p>${meter('Opportunity', result.perception.opportunitySalience)}${meter('Danger', result.perception.dangerSalience)}</div>
+      <div class="lab-block"><span class="lab-label">Perception</span><p>${escapeHtml(result.perception.summary)}</p></div>
+      <div class="lab-block"><span class="lab-label">Original self-rating</span>${meter('Opportunity', result.perception.opportunitySalience)}${meter('Danger', result.perception.dangerSalience)}</div>
+      ${separateHtml}
     </div>`;
   }
   if (state.lensId === 'valuesBeliefs') {
@@ -272,6 +306,11 @@ function diagnosticRepresentation() {
       character: label, conditionId, surfaceText: result.surfaceText,
       summary: result.perception?.summary ?? result.experience?.summary ?? '',
       llmScores: result.perception ? { opportunity: result.perception.opportunitySalience, danger: result.perception.dangerSalience } : { arousal: result.experience?.arousal },
+      separatePassScores: result.perception && separateScoreFor(conditionId) ? {
+        opportunity: separateScoreFor(conditionId).opportunitySalience,
+        danger: separateScoreFor(conditionId).dangerSalience,
+        rationale: separateScoreFor(conditionId).rationale
+      } : undefined,
       humanScores: state.lensId === 'temperament' ? state.diagnostic.humanScores[label] : undefined
     };
   });
@@ -325,7 +364,13 @@ async function generate() {
     state.result = payload;
     state.displayOrder = payload.results.map((item) => item.conditionId).sort(() => Math.random() - 0.5);
     state.ratings = { differenceStrength: null, naturalness: null, identification: null };
-    state.saved = false; state.labView = false; state.labEverViewed = false; resetDiagnosticState();
+    state.saved = false;
+    state.labView = false;
+    state.labEverViewed = false;
+    state.separateScore = null;
+    state.separateScoreLoading = false;
+    state.separateScoreError = null;
+    resetDiagnosticState();
     $('handfeel').classList.remove('hidden');
     $('run-meta').classList.remove('hidden');
     $('run-meta').innerHTML = `model: <code>${escapeHtml(payload.model)}</code> · ${payload.cacheHit ? 'cache hit / API費用なし' : 'live API'}${payload.usage ? ` · ${Number(payload.usage.totalTokens).toLocaleString()} tokens` : ''}`;
@@ -334,6 +379,62 @@ async function generate() {
     $('error').textContent = error.message; $('error').classList.remove('hidden');
   } finally {
     button.disabled = false; button.textContent = '比較を生成';
+  }
+}
+
+
+async function scoreTemperamentSeparately() {
+  if (
+    !state.result ||
+    state.lensId !== 'temperament' ||
+    state.separateScore ||
+    state.separateScoreLoading
+  ) {
+    return;
+  }
+
+  state.separateScoreLoading = true;
+  state.separateScoreError = null;
+  renderAll();
+
+  try {
+    const response = await fetch('/api/score-perception', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        lensId: state.result.lensId,
+        variantId: state.result.variantId,
+        scenarioId: state.result.scenario.id,
+        results: state.result.results.map((item) => ({
+          conditionId: item.conditionId,
+          surfaceText: item.surfaceText,
+          perception: {
+            summary: item.perception.summary
+          }
+        }))
+      })
+    });
+
+    const payload = await response.json();
+
+    if (!response.ok) {
+      throw new Error(
+        payload.error ?? 'Separate-pass scoring failed.'
+      );
+    }
+
+    state.separateScore = payload;
+
+    if (!$('run-meta').textContent.includes('separate-pass:')) {
+      $('run-meta').innerHTML +=
+        ` \u00b7 separate-pass: ${payload.cacheHit ? 'cache hit' : 'live API'}` +
+        `${payload.usage ? ` \u00b7 ${Number(payload.usage.totalTokens).toLocaleString()} tokens` : ''}`;
+    }
+  } catch (error) {
+    state.separateScoreError = error.message;
+  } finally {
+    state.separateScoreLoading = false;
+    renderAll();
   }
 }
 
@@ -372,11 +473,20 @@ function exportRatings() {
 }
 
 $('generate').addEventListener('click', generate);
-$('view-toggle').addEventListener('click', () => {
+$('view-toggle').addEventListener('click', async () => {
   if (!state.result || !state.saved) return;
+
   state.labView = !state.labView;
-  if (state.labView) state.labEverViewed = true;
+
+  if (state.labView) {
+    state.labEverViewed = true;
+  }
+
   renderAll();
+
+  if (state.labView && state.lensId === 'temperament') {
+    await scoreTemperamentSeparately();
+  }
 });
 $('save-rating').addEventListener('click', saveRatings);
 $('export-ratings').addEventListener('click', exportRatings);
