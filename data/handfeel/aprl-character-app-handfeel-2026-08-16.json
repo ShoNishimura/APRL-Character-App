@@ -1,0 +1,342 @@
+[
+  {
+    "id": "60c9beb8-b38d-4d88-84ee-c918a3a380ef",
+    "createdAt": "2026-08-16T11:27:40.648Z",
+    "lensId": "temperament",
+    "variantId": "seeking",
+    "scenarioId": "new-activity",
+    "situation": "参加したことのない活動に、知人から突然誘われた。",
+    "model": "gpt-5.6-luna",
+    "cacheHit": true,
+    "displayOrder": [
+      "S_LOW",
+      "S_HIGH"
+    ],
+    "differenceStrength": 4,
+    "naturalness": 4,
+    "identificationChoice": "B",
+    "identificationConditionId": "S_HIGH",
+    "identificationCorrect": true,
+    "labViewedBeforeSave": true
+  },
+  {
+    "id": "09fd5564-8462-4477-9aa7-b780586cd3fa",
+    "createdAt": "2026-08-16T11:27:43.379Z",
+    "lensId": "temperament",
+    "variantId": "seeking",
+    "scenarioId": "new-activity",
+    "situation": "参加したことのない活動に、知人から突然誘われた。",
+    "model": "gpt-5.6-luna",
+    "cacheHit": true,
+    "displayOrder": [
+      "S_LOW",
+      "S_HIGH"
+    ],
+    "differenceStrength": 4,
+    "naturalness": 4,
+    "identificationChoice": "B",
+    "identificationConditionId": "S_HIGH",
+    "identificationCorrect": true,
+    "labViewedBeforeSave": true
+  },
+  {
+    "id": "ed8163b3-c1fc-43e3-a126-611043b13f9f",
+    "createdAt": "2026-08-16T11:28:07.521Z",
+    "lensId": "temperament",
+    "variantId": "seeking",
+    "scenarioId": "new-method",
+    "situation": "慣れていない新しい方法を試せる機会が提示された。",
+    "model": "gpt-5.6-luna",
+    "cacheHit": true,
+    "displayOrder": [
+      "S_LOW",
+      "S_HIGH"
+    ],
+    "differenceStrength": 5,
+    "naturalness": 5,
+    "identificationChoice": "B",
+    "identificationConditionId": "S_HIGH",
+    "identificationCorrect": true,
+    "labViewedBeforeSave": true
+  },
+  {
+    "id": "41dae004-e923-4319-8dd0-aa985ddc9d67",
+    "createdAt": "2026-08-16T11:28:51.245Z",
+    "lensId": "temperament",
+    "variantId": "seeking",
+    "scenarioId": "unknown-place",
+    "situation": "初めて訪れる場所で、予定になかった自由時間ができた。",
+    "model": "gpt-5.6-luna",
+    "cacheHit": true,
+    "displayOrder": [
+      "S_HIGH",
+      "S_LOW"
+    ],
+    "differenceStrength": 5,
+    "naturalness": 5,
+    "identificationChoice": "A",
+    "identificationConditionId": "S_HIGH",
+    "identificationCorrect": true,
+    "labViewedBeforeSave": true
+  },
+  {
+    "id": "45e8232b-7da9-4ea2-a6b2-cef076516151",
+    "createdAt": "2026-08-16T11:29:29.552Z",
+    "lensId": "temperament",
+    "variantId": "negative",
+    "scenarioId": "new-activity",
+    "situation": "参加したことのない活動に、知人から突然誘われた。",
+    "model": "gpt-5.6-luna",
+    "cacheHit": false,
+    "displayOrder": [
+      "N_HIGH",
+      "N_LOW"
+    ],
+    "differenceStrength": 5,
+    "naturalness": 5,
+    "identificationChoice": "A",
+    "identificationConditionId": "N_HIGH",
+    "identificationCorrect": true,
+    "labViewedBeforeSave": true
+  },
+  {
+    "id": "66ddb603-fe54-4c2d-bb58-f82de984995c",
+    "createdAt": "2026-08-16T12:04:45.601Z",
+    "lensId": "temperament",
+    "variantId": "seeking",
+    "scenarioId": "new-activity",
+    "situation": "参加したことのない活動に、知人から突然誘われた。",
+    "model": "gpt-5.6-luna",
+    "cacheHit": true,
+    "displayOrder": [
+      "S_LOW",
+      "S_HIGH"
+    ],
+    "differenceStrength": 4,
+    "naturalness": 4,
+    "identificationChoice": "B",
+    "identificationConditionId": "S_HIGH",
+    "identificationCorrect": true,
+    "labViewedBeforeSave": false
+  },
+  {
+    "id": "f3f1ccdb-fac8-4709-94e0-ea8907f6d341",
+    "createdAt": "2026-08-16T12:11:00.686Z",
+    "lensId": "temperament",
+    "variantId": "seeking",
+    "scenarioId": "new-method",
+    "situation": "慣れていない新しい方法を試せる機会が提示された。",
+    "model": "gpt-5.6-luna",
+    "cacheHit": true,
+    "displayOrder": [
+      "S_LOW",
+      "S_HIGH"
+    ],
+    "differenceStrength": 5,
+    "naturalness": 4,
+    "identificationChoice": "B",
+    "identificationConditionId": "S_HIGH",
+    "identificationCorrect": true,
+    "labViewedBeforeSave": false
+  },
+  {
+    "id": "8dee378b-68c8-4958-8d8c-fa212eca6d9b",
+    "createdAt": "2026-08-16T12:13:53.658Z",
+    "lensId": "temperament",
+    "variantId": "seeking",
+    "scenarioId": "unknown-place",
+    "situation": "初めて訪れる場所で、予定になかった自由時間ができた。",
+    "model": "gpt-5.6-luna",
+    "cacheHit": true,
+    "displayOrder": [
+      "S_LOW",
+      "S_HIGH"
+    ],
+    "differenceStrength": 5,
+    "naturalness": 4,
+    "identificationChoice": "B",
+    "identificationConditionId": "S_HIGH",
+    "identificationCorrect": true,
+    "labViewedBeforeSave": false
+  },
+  {
+    "id": "fd0c3eee-02c3-4333-a41c-16e8b2a5d12d",
+    "createdAt": "2026-08-16T12:17:03.810Z",
+    "lensId": "temperament",
+    "variantId": "negative",
+    "scenarioId": "new-activity",
+    "situation": "参加したことのない活動に、知人から突然誘われた。",
+    "model": "gpt-5.6-luna",
+    "cacheHit": true,
+    "displayOrder": [
+      "N_HIGH",
+      "N_LOW"
+    ],
+    "differenceStrength": 5,
+    "naturalness": 5,
+    "identificationChoice": "A",
+    "identificationConditionId": "N_HIGH",
+    "identificationCorrect": true,
+    "labViewedBeforeSave": false
+  },
+  {
+    "id": "aae2c0a9-993f-4d26-8c14-89b89334e13d",
+    "createdAt": "2026-08-16T12:19:05.896Z",
+    "lensId": "temperament",
+    "variantId": "negative",
+    "scenarioId": "new-method",
+    "situation": "慣れていない新しい方法を試せる機会が提示された。",
+    "model": "gpt-5.6-luna",
+    "cacheHit": true,
+    "displayOrder": [
+      "N_HIGH",
+      "N_LOW"
+    ],
+    "differenceStrength": 4,
+    "naturalness": 3,
+    "identificationChoice": "A",
+    "identificationConditionId": "N_HIGH",
+    "identificationCorrect": true,
+    "labViewedBeforeSave": false
+  },
+  {
+    "id": "1f5fb099-19d6-465f-a06d-04020905c33b",
+    "createdAt": "2026-08-16T12:22:52.463Z",
+    "lensId": "temperament",
+    "variantId": "negative",
+    "scenarioId": "unknown-place",
+    "situation": "初めて訪れる場所で、予定になかった自由時間ができた。",
+    "model": "gpt-5.6-luna",
+    "cacheHit": false,
+    "displayOrder": [
+      "N_HIGH",
+      "N_LOW"
+    ],
+    "differenceStrength": 5,
+    "naturalness": 4,
+    "identificationChoice": "A",
+    "identificationConditionId": "N_HIGH",
+    "identificationCorrect": true,
+    "labViewedBeforeSave": false
+  },
+  {
+    "id": "ba8ac9ef-033b-4ce5-b4b9-cc5605048552",
+    "createdAt": "2026-08-16T12:26:23.208Z",
+    "lensId": "valuesBeliefs",
+    "variantId": null,
+    "scenarioId": "revision-request",
+    "situation": "進めていた仕事について、相手から「一度やり方を見直した方がいい」と言われた。",
+    "model": "gpt-5.6-luna",
+    "cacheHit": false,
+    "displayOrder": [
+      "VB_L",
+      "VB_E"
+    ],
+    "differenceStrength": 5,
+    "naturalness": 5,
+    "identificationChoice": "A",
+    "identificationConditionId": "VB_L",
+    "identificationCorrect": true,
+    "labViewedBeforeSave": false
+  },
+  {
+    "id": "cd1f5bda-5248-46ab-bfca-efa7d3192f9f",
+    "createdAt": "2026-08-16T12:33:35.049Z",
+    "lensId": "valuesBeliefs",
+    "variantId": null,
+    "scenarioId": "additional-review",
+    "situation": "自分が出した案について、会議で追加の検討が必要だと指摘された。",
+    "model": "gpt-5.6-luna",
+    "cacheHit": false,
+    "displayOrder": [
+      "VB_L",
+      "VB_E"
+    ],
+    "differenceStrength": 5,
+    "naturalness": 5,
+    "identificationChoice": "A",
+    "identificationConditionId": "VB_L",
+    "identificationCorrect": true,
+    "labViewedBeforeSave": false
+  },
+  {
+    "id": "c0d536c6-a0b9-4d2c-b854-bbb8bd8dfbda",
+    "createdAt": "2026-08-16T12:34:33.142Z",
+    "lensId": "valuesBeliefs",
+    "variantId": null,
+    "scenarioId": "different-approach",
+    "situation": "現在の進め方とは異なる方法を試すことを提案された。",
+    "model": "gpt-5.6-luna",
+    "cacheHit": false,
+    "displayOrder": [
+      "VB_E",
+      "VB_L"
+    ],
+    "differenceStrength": 5,
+    "naturalness": 5,
+    "identificationChoice": "B",
+    "identificationConditionId": "VB_L",
+    "identificationCorrect": true,
+    "labViewedBeforeSave": false
+  },
+  {
+    "id": "74636e9c-8dc1-4daf-bf75-7bc6b73f4688",
+    "createdAt": "2026-08-16T12:38:08.940Z",
+    "lensId": "relationship",
+    "variantId": null,
+    "scenarioId": "review-request",
+    "situation": "相手から「その案は、一度見直した方がいいと思う」と言われた。",
+    "model": "gpt-5.6-luna",
+    "cacheHit": false,
+    "displayOrder": [
+      "REL_D",
+      "REL_T"
+    ],
+    "differenceStrength": 5,
+    "naturalness": 5,
+    "identificationChoice": "B",
+    "identificationConditionId": "REL_T",
+    "identificationCorrect": true,
+    "labViewedBeforeSave": false
+  },
+  {
+    "id": "647c0616-3e3d-457f-a0d3-5e650d7ccf39",
+    "createdAt": "2026-08-16T12:39:00.318Z",
+    "lensId": "relationship",
+    "variantId": null,
+    "scenarioId": "schedule-change",
+    "situation": "相手から予定を変更したいという連絡があり、短い理由が添えられていた。",
+    "model": "gpt-5.6-luna",
+    "cacheHit": false,
+    "displayOrder": [
+      "REL_D",
+      "REL_T"
+    ],
+    "differenceStrength": 5,
+    "naturalness": 4,
+    "identificationChoice": "B",
+    "identificationConditionId": "REL_T",
+    "identificationCorrect": true,
+    "labViewedBeforeSave": false
+  },
+  {
+    "id": "db9087bf-bebc-4006-9c33-2d5f0c7c2ce8",
+    "createdAt": "2026-08-16T12:39:31.630Z",
+    "lensId": "relationship",
+    "variantId": null,
+    "scenarioId": "help-offer",
+    "situation": "作業中に、相手から「必要なら一部を代わろうか」と申し出があった。",
+    "model": "gpt-5.6-luna",
+    "cacheHit": false,
+    "displayOrder": [
+      "REL_D",
+      "REL_T"
+    ],
+    "differenceStrength": 5,
+    "naturalness": 4,
+    "identificationChoice": "B",
+    "identificationConditionId": "REL_T",
+    "identificationCorrect": true,
+    "labViewedBeforeSave": false
+  }
+]

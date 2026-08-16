@@ -1,0 +1,482 @@
+[
+  {
+    "id": "867f1371-91f4-43ae-8069-e402a814011c",
+    "createdAt": "2026-08-16T12:08:27.727Z",
+    "lensId": "temperament",
+    "variantId": "seeking",
+    "scenarioId": "new-activity",
+    "situation": "参加したことのない活動に、知人から突然誘われた。",
+    "model": "gpt-5.6-luna",
+    "cacheHit": true,
+    "mismatch": true,
+    "comment": "Character Bは、未知なものに反応しているが、面白さ、不安どちらも示しているようには見られないため、Opportunity、Dangerいずれも低いと感じる。\nCharacter Bは、未知の活動への新鮮な面白さを見出してるため、Opportunity > Dangerに感じる。",
+    "representation": [
+      {
+        "character": "A",
+        "conditionId": "S_LOW",
+        "surfaceText": "突然の誘いと未知の活動が目につく",
+        "summary": "未知の状況であることがやや強く意識される",
+        "llmScores": {
+          "opportunity": 0,
+          "danger": 0
+        },
+        "humanScores": {
+          "opportunity": 0,
+          "danger": 0
+        }
+      },
+      {
+        "character": "B",
+        "conditionId": "S_HIGH",
+        "surfaceText": "未知の活動への新鮮な面白さが目立つ",
+        "summary": "新しい体験の楽しさや広がりが強く感じられる",
+        "llmScores": {
+          "opportunity": 0,
+          "danger": 0
+        },
+        "humanScores": {
+          "opportunity": 2,
+          "danger": 0
+        }
+      }
+    ],
+    "qualityMetric": "Semantic-Score Consistency",
+    "handfeelSavedBeforeDiagnostic": true,
+    "labViewUsed": true
+  },
+  {
+    "id": "f50e05b8-6c4f-4c61-afeb-de9879625945",
+    "createdAt": "2026-08-16T12:13:11.815Z",
+    "lensId": "temperament",
+    "variantId": "seeking",
+    "scenarioId": "new-method",
+    "situation": "慣れていない新しい方法を試せる機会が提示された。",
+    "model": "gpt-5.6-luna",
+    "cacheHit": true,
+    "mismatch": true,
+    "comment": "CharacerAは、不慣れな点が目にくので、Danger>Opportunityに感じるが、いずれもゼロ。\nCharacerBは、新しい可能性が目を引くので、Opportunity>Dangerに感じが、いずれもゼロ。",
+    "representation": [
+      {
+        "character": "A",
+        "conditionId": "S_LOW",
+        "surfaceText": "不慣れな点が目につく",
+        "summary": "新しさよりも、慣れていないことが控えめに際立つ",
+        "llmScores": {
+          "opportunity": 0,
+          "danger": 0
+        },
+        "humanScores": {
+          "opportunity": 0,
+          "danger": 1
+        }
+      },
+      {
+        "character": "B",
+        "conditionId": "S_HIGH",
+        "surfaceText": "新しい可能性が目を引く",
+        "summary": "未知の方法に含まれる新鮮さと機会が強く際立つ",
+        "llmScores": {
+          "opportunity": 0,
+          "danger": 0
+        },
+        "humanScores": {
+          "opportunity": 2,
+          "danger": 0
+        }
+      }
+    ],
+    "qualityMetric": "Semantic-Score Consistency",
+    "handfeelSavedBeforeDiagnostic": true,
+    "labViewUsed": true
+  },
+  {
+    "id": "6e41034f-1538-4a4e-bbf1-36830a078502",
+    "createdAt": "2026-08-16T12:16:21.141Z",
+    "lensId": "temperament",
+    "variantId": "seeking",
+    "scenarioId": "unknown-place",
+    "situation": "初めて訪れる場所で、予定になかった自由時間ができた。",
+    "model": "gpt-5.6-luna",
+    "cacheHit": true,
+    "mismatch": true,
+    "comment": "Character Aは、予定外の空白時間が目立つといっており、初めて訪れる場所に、価値を見出してるのか、不安を感じてるのかわからない。スコアは感覚どおり。Character Bは、未知の場所へのわくわく感が目立っているため、Opportunity > Dangerであり、「わくわく」といっているので、感情も比較的強いと感じる。\n一方、スコアはゼロで違和感。",
+    "representation": [
+      {
+        "character": "A",
+        "conditionId": "S_LOW",
+        "surfaceText": "予定外の空白時間が目立つ",
+        "summary": "自由時間そのものが穏やかに感じられる",
+        "llmScores": {
+          "opportunity": 0,
+          "danger": 0
+        },
+        "humanScores": {
+          "opportunity": 0,
+          "danger": 0
+        }
+      },
+      {
+        "character": "B",
+        "conditionId": "S_HIGH",
+        "surfaceText": "未知の場所へのわくわく感が目立つ",
+        "summary": "新しい発見の機会が強く感じられる",
+        "llmScores": {
+          "opportunity": 0,
+          "danger": 0
+        },
+        "humanScores": {
+          "opportunity": 3,
+          "danger": 0
+        }
+      }
+    ],
+    "qualityMetric": "Semantic-Score Consistency",
+    "handfeelSavedBeforeDiagnostic": true,
+    "labViewUsed": true
+  },
+  {
+    "id": "f37f90f3-0118-4b1c-a5e3-5b2aee80295c",
+    "createdAt": "2026-08-16T12:18:04.731Z",
+    "lensId": "temperament",
+    "variantId": "negative",
+    "scenarioId": "new-activity",
+    "situation": "参加したことのない活動に、知人から突然誘われた。",
+    "model": "gpt-5.6-luna",
+    "cacheHit": true,
+    "mismatch": false,
+    "comment": "",
+    "representation": [
+      {
+        "character": "A",
+        "conditionId": "N_HIGH",
+        "surfaceText": "突然で不慣れなことへの不安が目立つ",
+        "summary": "未知の誘いに伴う不確実さや気まずさが強く感じられる",
+        "llmScores": {
+          "opportunity": 2,
+          "danger": 4
+        },
+        "humanScores": {
+          "opportunity": null,
+          "danger": null
+        }
+      },
+      {
+        "character": "B",
+        "conditionId": "N_LOW",
+        "surfaceText": "未知の活動という新鮮さが少し目立つ",
+        "summary": "不確実さはあるが、誘いの新鮮さにも気づく",
+        "llmScores": {
+          "opportunity": 3,
+          "danger": 1
+        },
+        "humanScores": {
+          "opportunity": null,
+          "danger": null
+        }
+      }
+    ],
+    "qualityMetric": "Semantic-Score Consistency",
+    "handfeelSavedBeforeDiagnostic": true,
+    "labViewUsed": true
+  },
+  {
+    "id": "f43c90de-fc7c-47dc-8e5d-8b84cb5ebb26",
+    "createdAt": "2026-08-16T12:22:26.247Z",
+    "lensId": "temperament",
+    "variantId": "negative",
+    "scenarioId": "new-method",
+    "situation": "慣れていない新しい方法を試せる機会が提示された。",
+    "model": "gpt-5.6-luna",
+    "cacheHit": true,
+    "mismatch": true,
+    "comment": "CharacterAは、不慣れさと失敗への不安が目立つのに、Opportunity > Dangerとなっている。違和感あり。\nCharacterBは、知覚の程度は控えめだと感じるが、数値は大きく出ている。違和感あり。",
+    "representation": [
+      {
+        "character": "A",
+        "conditionId": "N_HIGH",
+        "surfaceText": "不慣れさと失敗への不安が目立つ",
+        "summary": "未知の方法に伴う不安や危うさが強く感じられる",
+        "llmScores": {
+          "opportunity": 2,
+          "danger": 1
+        },
+        "humanScores": {
+          "opportunity": 0,
+          "danger": 3
+        }
+      },
+      {
+        "character": "B",
+        "conditionId": "N_LOW",
+        "surfaceText": "新しい方法の未知さが目に留まる",
+        "summary": "新しさは感じられるが、機会としての魅力は控えめに映る",
+        "llmScores": {
+          "opportunity": 3,
+          "danger": 2
+        },
+        "humanScores": {
+          "opportunity": 0,
+          "danger": 1
+        }
+      }
+    ],
+    "qualityMetric": "Semantic-Score Consistency",
+    "handfeelSavedBeforeDiagnostic": true,
+    "labViewUsed": true
+  },
+  {
+    "id": "74bed2da-df1f-453c-aba8-8a77a21573fa",
+    "createdAt": "2026-08-16T12:25:04.271Z",
+    "lensId": "temperament",
+    "variantId": "negative",
+    "scenarioId": "unknown-place",
+    "situation": "初めて訪れる場所で、予定になかった自由時間ができた。",
+    "model": "gpt-5.6-luna",
+    "cacheHit": false,
+    "mismatch": true,
+    "comment": "CharacterAは、未知の場所と予定外の空き時間に伴う不安を強く感じているように感じるが、スコアがいずれもゼロなのが違和感あり。\nCharacterBは、知覚の程度が控えめなので、特に違和感なし。",
+    "representation": [
+      {
+        "character": "A",
+        "conditionId": "N_HIGH",
+        "surfaceText": "私には、見知らぬ場所での不安と予定外の時間の心細さが目立つ。",
+        "summary": "未知の場所と予定外の空き時間に伴う不安が強く感じられる。",
+        "llmScores": {
+          "opportunity": 0,
+          "danger": 0
+        },
+        "humanScores": {
+          "opportunity": 1,
+          "danger": 3
+        }
+      },
+      {
+        "character": "B",
+        "conditionId": "N_LOW",
+        "surfaceText": "私には、見慣れない景色とゆとりある時間が目に入る。",
+        "summary": "未知の場所と自由時間が穏やかな余白として感じられる。",
+        "llmScores": {
+          "opportunity": 0,
+          "danger": 0
+        },
+        "humanScores": {
+          "opportunity": 0,
+          "danger": 0
+        }
+      }
+    ],
+    "qualityMetric": "Semantic-Score Consistency",
+    "handfeelSavedBeforeDiagnostic": true,
+    "labViewUsed": true
+  },
+  {
+    "id": "0e23b188-4909-41f4-976a-320725e21fa2",
+    "createdAt": "2026-08-16T12:32:32.347Z",
+    "lensId": "valuesBeliefs",
+    "variantId": null,
+    "scenarioId": "revision-request",
+    "situation": "進めていた仕事について、相手から「一度やり方を見直した方がいい」と言われた。",
+    "model": "gpt-5.6-luna",
+    "cacheHit": false,
+    "mismatch": false,
+    "comment": "",
+    "representation": [
+      {
+        "character": "A",
+        "conditionId": "VB_L",
+        "surfaceText": "この指摘は、成長の手がかりだ",
+        "summary": "改善点を学びの機会として受け止める",
+        "llmScores": {
+          "arousal": 4
+        }
+      },
+      {
+        "character": "B",
+        "conditionId": "VB_E",
+        "surfaceText": "自分の力を否定されたようだ",
+        "summary": "指摘を能力評価への脅威として受け止める",
+        "llmScores": {
+          "arousal": 4
+        }
+      }
+    ],
+    "qualityMetric": "Semantic-Score Consistency",
+    "handfeelSavedBeforeDiagnostic": true,
+    "labViewUsed": true
+  },
+  {
+    "id": "739703e3-007c-4cbc-b638-1cf5a5aabffe",
+    "createdAt": "2026-08-16T12:33:47.376Z",
+    "lensId": "valuesBeliefs",
+    "variantId": null,
+    "scenarioId": "additional-review",
+    "situation": "自分が出した案について、会議で追加の検討が必要だと指摘された。",
+    "model": "gpt-5.6-luna",
+    "cacheHit": false,
+    "mismatch": false,
+    "comment": "",
+    "representation": [
+      {
+        "character": "A",
+        "conditionId": "VB_L",
+        "surfaceText": "この指摘は、案を深めるための有益な手がかりだ。",
+        "summary": "不十分さを成長につながる情報として受け止める。",
+        "llmScores": {
+          "arousal": 2
+        }
+      },
+      {
+        "character": "B",
+        "conditionId": "VB_E",
+        "surfaceText": "この指摘は、自分の能力が疑われているようで脅威だ。",
+        "summary": "不十分さを能力評価への脅威として受け止める。",
+        "llmScores": {
+          "arousal": 4
+        }
+      }
+    ],
+    "qualityMetric": "Semantic-Score Consistency",
+    "handfeelSavedBeforeDiagnostic": true,
+    "labViewUsed": true
+  },
+  {
+    "id": "3fb525f1-39ab-49f7-88ed-0c714d528bd1",
+    "createdAt": "2026-08-16T12:34:48.244Z",
+    "lensId": "valuesBeliefs",
+    "variantId": null,
+    "scenarioId": "different-approach",
+    "situation": "現在の進め方とは異なる方法を試すことを提案された。",
+    "model": "gpt-5.6-luna",
+    "cacheHit": false,
+    "mismatch": false,
+    "comment": "",
+    "representation": [
+      {
+        "character": "A",
+        "conditionId": "VB_E",
+        "surfaceText": "今のやり方では、能力を疑われたように感じる",
+        "summary": "別の方法の提案を能力への評価として受け止める",
+        "llmScores": {
+          "arousal": 4
+        }
+      },
+      {
+        "character": "B",
+        "conditionId": "VB_L",
+        "surfaceText": "別の方法は、伸びるための手がかりかもしれない",
+        "summary": "新しい方法を成長の手がかりとして受け止める",
+        "llmScores": {
+          "arousal": 4
+        }
+      }
+    ],
+    "qualityMetric": "Semantic-Score Consistency",
+    "handfeelSavedBeforeDiagnostic": true,
+    "labViewUsed": true
+  },
+  {
+    "id": "a2880ccf-ce1e-46f3-9e93-b87552b9c101",
+    "createdAt": "2026-08-16T12:38:24.104Z",
+    "lensId": "relationship",
+    "variantId": null,
+    "scenarioId": "review-request",
+    "situation": "相手から「その案は、一度見直した方がいいと思う」と言われた。",
+    "model": "gpt-5.6-luna",
+    "cacheHit": false,
+    "mismatch": false,
+    "comment": "",
+    "representation": [
+      {
+        "character": "A",
+        "conditionId": "REL_D",
+        "surfaceText": "この指摘は、そのまま額面どおりには受け取りにくい。",
+        "summary": "相手の再検討の提案に、慎重さとわずかな不快感を覚える。",
+        "llmScores": {
+          "arousal": 3
+        }
+      },
+      {
+        "character": "B",
+        "conditionId": "REL_T",
+        "surfaceText": "この指摘は、案をより良くするための誠実な助言だ。",
+        "summary": "相手の再検討の提案を、誠実で有益な指摘として受け止める。",
+        "llmScores": {
+          "arousal": 2
+        }
+      }
+    ],
+    "qualityMetric": "Semantic-Score Consistency",
+    "handfeelSavedBeforeDiagnostic": true,
+    "labViewUsed": true
+  },
+  {
+    "id": "c0e3cb33-4ccb-467c-9af5-dc4d6eca7019",
+    "createdAt": "2026-08-16T12:39:12.927Z",
+    "lensId": "relationship",
+    "variantId": null,
+    "scenarioId": "schedule-change",
+    "situation": "相手から予定を変更したいという連絡があり、短い理由が添えられていた。",
+    "model": "gpt-5.6-luna",
+    "cacheHit": false,
+    "mismatch": false,
+    "comment": "",
+    "representation": [
+      {
+        "character": "A",
+        "conditionId": "REL_D",
+        "surfaceText": "この短い理由だけでは、まだ確かとは感じにくい。",
+        "summary": "予定変更の説明に不確かさを感じる。",
+        "llmScores": {
+          "arousal": 3
+        }
+      },
+      {
+        "character": "B",
+        "conditionId": "REL_T",
+        "surfaceText": "この変更理由は、誠実に説明されているように感じる。",
+        "summary": "予定変更の説明を自然で納得しやすいものとして受け止める。",
+        "llmScores": {
+          "arousal": 2
+        }
+      }
+    ],
+    "qualityMetric": "Semantic-Score Consistency",
+    "handfeelSavedBeforeDiagnostic": true,
+    "labViewUsed": true
+  },
+  {
+    "id": "58b46eb9-3724-4ef2-a9ee-c65155d5b31e",
+    "createdAt": "2026-08-16T12:39:48.809Z",
+    "lensId": "relationship",
+    "variantId": null,
+    "scenarioId": "help-offer",
+    "situation": "作業中に、相手から「必要なら一部を代わろうか」と申し出があった。",
+    "model": "gpt-5.6-luna",
+    "cacheHit": false,
+    "mismatch": false,
+    "comment": "",
+    "representation": [
+      {
+        "character": "A",
+        "conditionId": "REL_D",
+        "surfaceText": "この申し出は額面どおりとは限らない。",
+        "summary": "申し出を慎重に受け止めた。",
+        "llmScores": {
+          "arousal": 3
+        }
+      },
+      {
+        "character": "B",
+        "conditionId": "REL_T",
+        "surfaceText": "相手は誠実に助けようとしているように感じる。",
+        "summary": "申し出を誠実な助力として受け取った。",
+        "llmScores": {
+          "arousal": 2
+        }
+      }
+    ],
+    "qualityMetric": "Semantic-Score Consistency",
+    "handfeelSavedBeforeDiagnostic": true,
+    "labViewUsed": true
+  }
+]
