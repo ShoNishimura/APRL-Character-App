@@ -26,6 +26,31 @@ const temperamentSchema = {
   }
 };
 
+
+const separateTemperamentScoreSchema = {
+  type: 'object',
+  additionalProperties: false,
+  required: ['scores'],
+  properties: {
+    scores: {
+      type: 'array',
+      minItems: 2,
+      maxItems: 2,
+      items: {
+        type: 'object',
+        additionalProperties: false,
+        required: ['itemId', 'opportunitySalience', 'dangerSalience', 'rationale'],
+        properties: {
+          itemId: { type: 'string' },
+          opportunitySalience: { type: 'integer', minimum: 0, maximum: 4 },
+          dangerSalience: { type: 'integer', minimum: 0, maximum: 4 },
+          rationale: { type: 'string' }
+        }
+      }
+    }
+  }
+};
+
 const experienceSchema = {
   type: 'object',
   additionalProperties: false,
@@ -162,5 +187,142 @@ export async function generateWithOpenAI({ apiKey, model, runSpec }) {
       totalTokens: payload.usage.total_tokens ?? 0
     } : undefined,
     results: parsed.results
+  };
+}
+
+export async function scoreTemperamentPerceptionWithOpenAI({
+  apiKey,
+  model,
+  runSpec,
+  results
+}) {
+  if (runSpec.lensId !== 'temperament') {
+    throw new Error('Separate perception scoring is only available for Temperament Lens.');
+  }
+
+  if (!Array.isArray(results) || results.length !== 2) {
+    throw new Error('Separate perception scoring requires exactly two results.');
+  }
+
+  const resultMap = new Map(results.map((item) => [item.conditionId, item]));
+
+  const blindItems = runSpec.conditions.map((condition, index) => {
+    const source = resultMap.get(condition.id);
+    if (
+      !source ||
+      typeof source.surfaceText !== 'string' ||
+      typeof source.perception?.summary !== 'string'
+    ) {
+      throw new Error(`Missing Perception text for condition: ${condition.id}`);
+    }
+
+    return {
+      itemId: `item-${index + 1}`,
+      surfaceText: source.surfaceText,
+      summary: source.perception.summary
+    };
+  });
+
+  const itemToCondition = new Map(
+    blindItems.map((item, index) => [item.itemId, runSpec.conditions[index].id])
+  );
+
+  const instructions = [
+    'You are a separate-pass blind evaluator of perceived salience.',
+    'You are evaluating already-generated Perception text. Do not generate a new Character response.',
+    'You do not know experimental conditions, Temperament values, hypotheses, original numeric scores, or expected ordering.',
+    'Use only the external Situation and each supplied Perception surfaceText and summary.',
+    '',
+    'Opportunity salience:',
+    '0 = reward, novelty value, positive possibility, exploration value, or useful opportunity is not salient',
+    '1 = faint or weakly implied',
+    '2 = clearly present but secondary',
+    '3 = strong and prominent',
+    '4 = dominant or central to what stands out',
+    '',
+    'Danger salience:',
+    '0 = threat, loss, rejection, unpleasantness, failure risk, fear, or aversive uncertainty is not salient',
+    '1 = faint or weakly implied',
+    '2 = clearly present but secondary',
+    '3 = strong and prominent',
+    '4 = dominant or central to what stands out',
+    '',
+    'Score each item independently.',
+    'Do not infer hidden personality traits or experimental conditions.',
+    'Opportunity and Danger are independent dimensions.',
+    'Unknown or unfamiliar is not automatically Danger.',
+    'New is not automatically Opportunity.',
+    'Score the meaning actually expressed by the supplied Perception.',
+    'Keep rationale concise.'
+  ].join('\n');
+
+  const response = await fetch('https://api.openai.com/v1/responses', {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      model,
+      reasoning: { effort: 'low' },
+      text: {
+        verbosity: 'low',
+        format: {
+          type: 'json_schema',
+          name: 'aprl_separate_temperament_score',
+          strict: true,
+          schema: separateTemperamentScoreSchema
+        }
+      },
+      instructions,
+      input: JSON.stringify({
+        situation: runSpec.scenario.situation,
+        items: blindItems
+      })
+    })
+  });
+
+  const payload = await response.json();
+
+  if (!response.ok) {
+    throw new Error(
+      payload?.error?.message ?? `OpenAI API error (${response.status})`
+    );
+  }
+
+  const parsed = JSON.parse(extractOutputText(payload));
+
+  if (!Array.isArray(parsed.scores) || parsed.scores.length !== 2) {
+    throw new Error('Separate scoring returned an invalid item count.');
+  }
+
+  const seen = new Set();
+
+  const scores = parsed.scores.map((score) => {
+    const conditionId = itemToCondition.get(score.itemId);
+
+    if (!conditionId || seen.has(conditionId)) {
+      throw new Error(`Invalid separate scoring itemId: ${score.itemId}`);
+    }
+
+    seen.add(conditionId);
+
+    return {
+      conditionId,
+      opportunitySalience: score.opportunitySalience,
+      dangerSalience: score.dangerSalience,
+      rationale: score.rationale
+    };
+  });
+
+  return {
+    model,
+    requestId: payload.id,
+    usage: payload.usage ? {
+      inputTokens: payload.usage.input_tokens ?? 0,
+      outputTokens: payload.usage.output_tokens ?? 0,
+      totalTokens: payload.usage.total_tokens ?? 0
+    } : undefined,
+    scores
   };
 }
