@@ -1,7 +1,7 @@
-﻿# OBS-0001 — Semantic-Score Consistency
+# OBS-0001 — Semantic-Score Consistency
 
-> Status: Open observation / exploratory  
-> Scope: APRL Character App MVP v0.1  
+> Status: Open observation / exploratory
+> Scope: APRL Character App MVP v0.1
 > Lens: Temperament (Seeking / Negative Affectivity)
 
 ## Quality metric
@@ -46,7 +46,7 @@ Temperamentでは **5 / 6 mismatch** だった。
 Blind Handfeelでは全12ケースで条件識別に成功しており、
 Character差の自然言語表現と定量スコアを分けて扱う必要が生じた。
 
-Raw:
+Record:
 
 - `data/diagnostics/aprl-character-app-diagnostics-2026-08-16.json`
 - `data/handfeel/aprl-character-app-handfeel-2026-08-16.json`
@@ -82,11 +82,13 @@ all-zero patternがキャッシュ済み生成結果固有かを切り分けた�
 となり、自然言語から受け取るOpportunity方向と
 自己評定値の方向が逆転した。
 
-Raw:
+Record:
 
 - `data/diagnostics/aprl-character-app-seeking-live-retest-2026-08-16.json`
 
-## Follow-up 2 — Blind independent rescoring
+> Provenance: このファイルはlive retest実行時のコンソール出力から事後に再構成した記録であり、API responseそのものではない。requestId / usageは未保存。
+
+## Follow-up 2 — Blind separate-pass rescoring
 
 fresh live retestで得られた12個のPerception自然言語を、
 別API呼び出しでblind再採点した。
@@ -125,7 +127,7 @@ Opportunity / Dangerについては0–4の絶対尺度だけを定義した。
 conditionを見せていないblind再採点でも、
 自然言語表現からSeeking方向のOpportunity差が再構成された。
 
-Raw:
+Record:
 
 - `data/diagnostics/aprl-character-app-seeking-blind-evaluator-2026-08-16.json`
 
