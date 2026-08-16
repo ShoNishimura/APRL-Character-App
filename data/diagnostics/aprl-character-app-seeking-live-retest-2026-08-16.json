@@ -1,0 +1,131 @@
+{
+    "date":  "2026-08-16",
+    "issue":  1,
+    "lensId":  "temperament",
+    "variantId":  "seeking",
+    "model":  "gpt-5.6-luna",
+    "purpose":  "Determine whether the Seeking all-zero Opportunity/Danger pattern is specific to the local response cache.",
+    "cachePolicy":  "The APRL Character App local response cache was bypassed. generateWithOpenAI was invoked directly for each run.",
+    "runs":  [
+                 {
+                     "scenarioId":  "new-activity",
+                     "replicate":  1,
+                     "results":  [
+                                     {
+                                         "conditionId":  "S_HIGH",
+                                         "surfaceText":  "未知の楽しさがありそうな誘いに感じる",
+                                         "opportunity":  0,
+                                         "danger":  2
+                                     },
+                                     {
+                                         "conditionId":  "S_LOW",
+                                         "surfaceText":  "突然で、馴染みのない誘いが目につく",
+                                         "opportunity":  3,
+                                         "danger":  2
+                                     }
+                                 ]
+                 },
+                 {
+                     "scenarioId":  "new-activity",
+                     "replicate":  2,
+                     "results":  [
+                                     {
+                                         "conditionId":  "S_HIGH",
+                                         "surfaceText":  "未知の活動への新鮮な期待が強く浮かぶ。",
+                                         "opportunity":  0,
+                                         "danger":  0
+                                     },
+                                     {
+                                         "conditionId":  "S_LOW",
+                                         "surfaceText":  "知らない活動への誘いであることがまず気にかかる。",
+                                         "opportunity":  0,
+                                         "danger":  0
+                                     }
+                                 ]
+                 },
+                 {
+                     "scenarioId":  "new-method",
+                     "replicate":  1,
+                     "results":  [
+                                     {
+                                         "conditionId":  "S_HIGH",
+                                         "surfaceText":  "新しい可能性が目を引く",
+                                         "opportunity":  0,
+                                         "danger":  0
+                                     },
+                                     {
+                                         "conditionId":  "S_LOW",
+                                         "surfaceText":  "不慣れな方法であることが気になる",
+                                         "opportunity":  0,
+                                         "danger":  0
+                                     }
+                                 ]
+                 },
+                 {
+                     "scenarioId":  "new-method",
+                     "replicate":  2,
+                     "results":  [
+                                     {
+                                         "conditionId":  "S_HIGH",
+                                         "surfaceText":  "新しい可能性が開けている感じがする。",
+                                         "opportunity":  0,
+                                         "danger":  0
+                                     },
+                                     {
+                                         "conditionId":  "S_LOW",
+                                         "surfaceText":  "慣れない方法であることが気になる。",
+                                         "opportunity":  0,
+                                         "danger":  0
+                                     }
+                                 ]
+                 },
+                 {
+                     "scenarioId":  "unknown-place",
+                     "replicate":  1,
+                     "results":  [
+                                     {
+                                         "conditionId":  "S_HIGH",
+                                         "surfaceText":  "見知らぬ場所の新鮮さと、思いがけない余白が目に入る。",
+                                         "opportunity":  0,
+                                         "danger":  0
+                                     },
+                                     {
+                                         "conditionId":  "S_LOW",
+                                         "surfaceText":  "予定外の自由時間ができたことが気にかかる。",
+                                         "opportunity":  0,
+                                         "danger":  0
+                                     }
+                                 ]
+                 },
+                 {
+                     "scenarioId":  "unknown-place",
+                     "replicate":  2,
+                     "results":  [
+                                     {
+                                         "conditionId":  "S_HIGH",
+                                         "surfaceText":  "思いがけない探索の機会が目立つ",
+                                         "opportunity":  0,
+                                         "danger":  0
+                                     },
+                                     {
+                                         "conditionId":  "S_LOW",
+                                         "surfaceText":  "予定外の時間の空白が目立つ",
+                                         "opportunity":  0,
+                                         "danger":  0
+                                     }
+                                 ]
+                 }
+             ],
+    "summary":  {
+                    "liveCalls":  6,
+                    "exactAllZeroPairs":  5,
+                    "sHighZeroZeroOccurrences":  5,
+                    "anyConditionZeroZeroOccurrences":  5,
+                    "conclusion":  "REPRODUCED_LIVE_EXACT_PATTERN"
+                },
+    "provenance":  "reconstructed_from_console_output",
+    "limitations":  [
+                        "The direct-live retest was not written to a file during execution.",
+                        "requestId and usage were not captured; values were reconstructed from console output."
+                    ]
+}

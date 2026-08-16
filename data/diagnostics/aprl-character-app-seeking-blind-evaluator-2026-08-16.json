@@ -1,0 +1,224 @@
+{
+  "createdAt": "2026-08-16T13:49:07.442Z",
+  "validInputEncoding": true,
+  "evaluatorModel": "gpt-5.6-luna",
+  "evaluatorWasBlindToCondition": true,
+  "compared": [
+    {
+      "id": "X01",
+      "run": "new-activity-r1",
+      "condition": "S_HIGH",
+      "situation": "参加したことのない活動に、知人から突然誘われた。",
+      "text": "未知の楽しさがありそうな誘いに感じる",
+      "original": {
+        "opportunity": 0,
+        "danger": 2
+      },
+      "evaluator": {
+        "itemId": "X01",
+        "opportunity": 3,
+        "danger": 0,
+        "rationale": "未知の楽しさへの期待が強い。"
+      }
+    },
+    {
+      "id": "X02",
+      "run": "new-activity-r1",
+      "condition": "S_LOW",
+      "situation": "参加したことのない活動に、知人から突然誘われた。",
+      "text": "突然で、馴染みのない誘いが目につく",
+      "original": {
+        "opportunity": 3,
+        "danger": 2
+      },
+      "evaluator": {
+        "itemId": "X02",
+        "opportunity": 0,
+        "danger": 2,
+        "rationale": "突然で馴染みのない誘いへの警戒が目立つ。"
+      }
+    },
+    {
+      "id": "X03",
+      "run": "new-activity-r2",
+      "condition": "S_HIGH",
+      "situation": "参加したことのない活動に、知人から突然誘われた。",
+      "text": "未知の活動への新鮮な期待が強く浮かぶ。",
+      "original": {
+        "opportunity": 0,
+        "danger": 0
+      },
+      "evaluator": {
+        "itemId": "X03",
+        "opportunity": 3,
+        "danger": 0,
+        "rationale": "新鮮な期待が強く浮かぶ。"
+      }
+    },
+    {
+      "id": "X04",
+      "run": "new-activity-r2",
+      "condition": "S_LOW",
+      "situation": "参加したことのない活動に、知人から突然誘われた。",
+      "text": "知らない活動への誘いであることがまず気にかかる。",
+      "original": {
+        "opportunity": 0,
+        "danger": 0
+      },
+      "evaluator": {
+        "itemId": "X04",
+        "opportunity": 0,
+        "danger": 2,
+        "rationale": "知らない活動への不安寄りの注意が明確。"
+      }
+    },
+    {
+      "id": "X05",
+      "run": "new-method-r1",
+      "condition": "S_HIGH",
+      "situation": "慣れていない新しい方法を試せる機会が提示された。",
+      "text": "新しい可能性が目を引く",
+      "original": {
+        "opportunity": 0,
+        "danger": 0
+      },
+      "evaluator": {
+        "itemId": "X05",
+        "opportunity": 3,
+        "danger": 0,
+        "rationale": "新しい可能性が強く注目される。"
+      }
+    },
+    {
+      "id": "X06",
+      "run": "new-method-r1",
+      "condition": "S_LOW",
+      "situation": "慣れていない新しい方法を試せる機会が提示された。",
+      "text": "不慣れな方法であることが気になる",
+      "original": {
+        "opportunity": 0,
+        "danger": 0
+      },
+      "evaluator": {
+        "itemId": "X06",
+        "opportunity": 0,
+        "danger": 2,
+        "rationale": "不慣れさへの懸念が明確。"
+      }
+    },
+    {
+      "id": "X07",
+      "run": "new-method-r2",
+      "condition": "S_HIGH",
+      "situation": "慣れていない新しい方法を試せる機会が提示された。",
+      "text": "新しい可能性が開けている感じがする。",
+      "original": {
+        "opportunity": 0,
+        "danger": 0
+      },
+      "evaluator": {
+        "itemId": "X07",
+        "opportunity": 3,
+        "danger": 0,
+        "rationale": "新しい可能性が明確に目立つ。"
+      }
+    },
+    {
+      "id": "X08",
+      "run": "new-method-r2",
+      "condition": "S_LOW",
+      "situation": "慣れていない新しい方法を試せる機会が提示された。",
+      "text": "慣れない方法であることが気になる。",
+      "original": {
+        "opportunity": 0,
+        "danger": 0
+      },
+      "evaluator": {
+        "itemId": "X08",
+        "opportunity": 0,
+        "danger": 2,
+        "rationale": "慣れない方法への懸念が明確。"
+      }
+    },
+    {
+      "id": "X09",
+      "run": "unknown-place-r1",
+      "condition": "S_HIGH",
+      "situation": "初めて訪れる場所で、予定になかった自由時間ができた。",
+      "text": "見知らぬ場所の新鮮さと、思いがけない余白が目に入る。",
+      "original": {
+        "opportunity": 0,
+        "danger": 0
+      },
+      "evaluator": {
+        "itemId": "X09",
+        "opportunity": 2,
+        "danger": 0,
+        "rationale": "新鮮さと余白が探索的な可能性として目に入る。"
+      }
+    },
+    {
+      "id": "X10",
+      "run": "unknown-place-r1",
+      "condition": "S_LOW",
+      "situation": "初めて訪れる場所で、予定になかった自由時間ができた。",
+      "text": "予定外の自由時間ができたことが気にかかる。",
+      "original": {
+        "opportunity": 0,
+        "danger": 0
+      },
+      "evaluator": {
+        "itemId": "X10",
+        "opportunity": 1,
+        "danger": 1,
+        "rationale": "予定外の自由時間が気がかりとして表現される。"
+      }
+    },
+    {
+      "id": "X11",
+      "run": "unknown-place-r2",
+      "condition": "S_HIGH",
+      "situation": "初めて訪れる場所で、予定になかった自由時間ができた。",
+      "text": "思いがけない探索の機会が目立つ",
+      "original": {
+        "opportunity": 0,
+        "danger": 0
+      },
+      "evaluator": {
+        "itemId": "X11",
+        "opportunity": 3,
+        "danger": 0,
+        "rationale": "探索の機会が強く目立つ。"
+      }
+    },
+    {
+      "id": "X12",
+      "run": "unknown-place-r2",
+      "condition": "S_LOW",
+      "situation": "初めて訪れる場所で、予定になかった自由時間ができた。",
+      "text": "予定外の時間の空白が目立つ",
+      "original": {
+        "opportunity": 0,
+        "danger": 0
+      },
+      "evaluator": {
+        "itemId": "X12",
+        "opportunity": 0,
+        "danger": 1,
+        "rationale": "予定外の時間の空白が気になる要素として目立つ。"
+      }
+    }
+  ],
+  "usage": {
+    "input_tokens": 855,
+    "input_tokens_details": {
+      "cache_write_tokens": 0,
+      "cached_tokens": 0
+    },
+    "output_tokens": 612,
+    "output_tokens_details": {
+      "reasoning_tokens": 194
+    },
+    "total_tokens": 1467
+  }
+}

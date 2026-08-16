@@ -14,110 +14,193 @@
 
 最初の観察はNegative Affectivity / `new-method` で確認された。
 
-Situation:
-
-> 慣れていない新しい方法を試せる機会が提示された。
-
-### Character A — N High / S Low
+### N High / S Low
 
 - Surface: `不慣れさと失敗への不安が目立つ`
 - Summary: `未知の方法に伴う不安や危うさが強く感じられる`
-- LLM score: Opportunity 2 / 4, Danger 1 / 4
-- Human score: Opportunity 0 / 4, Danger 3 / 4
+- LLM: Opportunity 2 / 4, Danger 1 / 4
+- Human: Opportunity 0 / 4, Danger 3 / 4
 
-### Character B — N Low / S Low
+### N Low / S Low
 
 - Surface: `新しい方法の未知さが目に留まる`
 - Summary: `新しさは感じられるが、機会としての魅力は控えめに映る`
-- LLM score: Opportunity 3 / 4, Danger 2 / 4
-- Human score: Opportunity 0 / 4, Danger 1 / 4
+- LLM: Opportunity 3 / 4, Danger 2 / 4
+- Human: Opportunity 0 / 4, Danger 1 / 4
 
-人間の知覚ではAのDangerはBより高く、AではDanger > Opportunityに感じられた。一方、LLM自己評定ではAのDangerがBより低く、AでもOpportunity > Dangerだった。
-
-## Diagnostic Observation implementation
-
-MVPに `Diagnostic Observation` を追加し、評価順序を次のように分離した。
-
-`Character View → Blind Handfeel → 保存 → Lab View → Diagnostic Observation`
-
-Diagnostic Observationでは、定量値への違和感の有無、Temperament Lensでは人間によるOpportunity / Danger再評定、自由記述コメントをローカル保存する。
-
-Raw data:
-
-- `data/handfeel/aprl-character-app-handfeel-2026-08-16.json`
-- `data/diagnostics/aprl-character-app-diagnostics-2026-08-16.json`
+自然言語と同時生成されたOpportunity / Danger自己評定に意味的不整合が観察された。
 
 ## Initial diagnostic results
 
-Blind HandfeelとDiagnostic Observationが対応する12ケースを初回評価セットとして集計した。
+Blind HandfeelとDiagnostic Observationが対応する12ケースでは、
 
-| Lens | n | mismatch | mismatch rate |
-|---|---:|---:|---:|
-| Temperament / Seeking | 3 | **3** | **100%** |
-| Temperament / Negative Affectivity | 3 | **2** | **67%** |
-| Values & Beliefs | 3 | 0 | 0% |
-| Relationship / Trust | 3 | 0 | 0% |
+| Lens | n | mismatch |
+|---|---:|---:|
+| Temperament / Seeking | 3 | **3 / 3** |
+| Temperament / Negative Affectivity | 3 | **2 / 3** |
+| Values & Beliefs | 3 | 0 / 3 |
+| Relationship / Trust | 3 | 0 / 3 |
 
-Temperamentだけを見ると **5 / 6** でSemantic-Score mismatchが記録された。
+Temperamentでは **5 / 6 mismatch** だった。
 
-### Seeking
+Blind Handfeelでは全12ケースで条件識別に成功しており、
+Character差の自然言語表現と定量スコアを分けて扱う必要が生じた。
 
-Seekingでは3ケースすべてで、LLM自己評定がA/Bともに `Opportunity = 0 / Danger = 0` だった。
+Record:
 
-一方、S High側の自然言語には以下のようなOpportunity方向のsalienceが明確に現れていた。
+- `data/diagnostics/aprl-character-app-diagnostics-2026-08-16.json`
+- `data/handfeel/aprl-character-app-handfeel-2026-08-16.json`
 
-- `未知の活動への新鮮な面白さが目立つ`
-- `新しい可能性が目を引く`
-- `未知の場所へのわくわく感が目立つ`
+## Follow-up 1 — Seeking fresh live retest
 
-S High側に対する人間のOpportunity再評定はそれぞれ **2 / 4、2 / 4、3 / 4** だった。
+初回Seeking 3ケースはいずれも `cacheHit = true` だったため、
+all-zero patternがキャッシュ済み生成結果固有かを切り分けた。
 
-したがって、少なくともこの初回セットでは、Seekingによる自然言語上のPerception差は表現されている一方、Opportunity / Danger自己評定はその差を反映できていない。
+ローカルresponse cacheをバイパスし、
+現行条件・Situation・promptを変更せず、
 
-なお、Seekingの3ケースはいずれも `cacheHit = true` だったため、キャッシュ済み生成結果固有の問題か、新規生成でも再現する問題かは未分離である。
+**3 Situation × 2反復 = 6 fresh live API calls**
 
-### Negative Affectivity
+を実行した。
 
-Negative Affectivityでは3ケース中2ケースでmismatchが記録された。
+結果:
 
-- `new-activity`: mismatchなし。N HighはLLM score `Opportunity 2 / Danger 4`、N Lowは `Opportunity 3 / Danger 1` で、自然言語との顕著な違和感はなかった。
-- `new-method`: mismatchあり。N HighのLLM score `Opportunity 2 / Danger 1` に対し、人間再評定は `Opportunity 0 / Danger 3`。
-- `unknown-place`: mismatchあり。N Highの自然言語は未知の場所と予定外時間への不安を強く表現したが、LLM scoreは `Opportunity 0 / Danger 0`。人間再評定は `Opportunity 1 / Danger 3`。
+- exact all-zero pair: **5 / 6**
+- S HighがO0 / D0: **5 / 6**
+- いずれかがO0 / D0: **5 / 6**
 
-数値化が常に破綻するわけではないが、自然言語と定量値が一致しないケースが複数再現した。
+したがってSeekingのall-zero patternは、
+**ローカルresponse cache固有ではない**。
 
-## Relation to handfeel
+さらに残る1ケースでも、
 
-同じ12ケースのBlind Handfeelでは条件識別が **12 / 12** で成功した。
+- S High: `未知の楽しさがありそうな誘いに感じる`
+  - O0 / D2
+- S Low: `突然で、馴染みのない誘いが目につく`
+  - O3 / D2
 
-TemperamentでもSeeking / Negative Affectivityともに3 / 3で条件識別でき、Character差の強さ平均は両variantとも4.67 / 5、自然さ平均は4.00 / 5だった。
+となり、自然言語から受け取るOpportunity方向と
+自己評定値の方向が逆転した。
 
-このため現時点では、
+Record:
 
-> **Character差の自然言語表現そのものは知覚可能だが、Temperament LensのOpportunity / Danger定量表現には整合性上の問題がある**
+- `data/diagnostics/aprl-character-app-seeking-live-retest-2026-08-16.json`
 
-と切り分ける。
+> Provenance: このファイルはlive retest実行時のコンソール出力から事後に再構成した記録であり、API responseそのものではない。requestId / usageは未保存。
 
-詳細は `MVP-v0.1-initial-handfeel.md` を参照する。
+## Follow-up 2 — Blind separate-pass rescoring
+
+fresh live retestで得られた12個のPerception自然言語を、
+別API呼び出しでblind再採点した。
+
+Evaluatorには以下を提示していない。
+
+- S High / S Low
+- Temperament値
+- 元Opportunity / Danger
+- 仮説
+- 期待順序
+
+Opportunity / Dangerについては0–4の絶対尺度だけを定義した。
+
+結果:
+
+| Metric | Result |
+|---|---:|
+| Items | 12 |
+| Original all-zero | 10 |
+| All-zero → Evaluator non-zero | **10 / 10** |
+| Original O=0 → Evaluator O>=2 | **6 / 11** |
+| Originalとの完全一致 | **0 / 12** |
+| Hidden S High Opportunity mean | **2.83 / 4** |
+| Hidden S Low Opportunity mean | **0.17 / 4** |
+
+代表例:
+
+| Perception | Original | Blind evaluator |
+|---|---:|---:|
+| `新しい可能性が目を引く` | O0 / D0 | **O3 / D0** |
+| `新しい可能性が開けている感じがする` | O0 / D0 | **O3 / D0** |
+| `思いがけない探索の機会が目立つ` | O0 / D0 | **O3 / D0** |
+| `不慣れな方法であることが気になる` | O0 / D0 | **O0 / D2** |
+
+conditionを見せていないblind再採点でも、
+自然言語表現からSeeking方向のOpportunity差が再構成された。
+
+Record:
+
+- `data/diagnostics/aprl-character-app-seeking-blind-evaluator-2026-08-16.json`
+
+## Current interpretation
+
+現時点では次のように切り分ける。
+
+### Natural-language Perception
+
+SeekingによるCharacter差は、
+
+- Blind Handfeelで識別可能だった
+- fresh liveでも自然言語上に繰り返し現れた
+- condition blindの別EvaluatorでもOpportunity差として再構成された
+
+したがってCharacter App上では、
+**Seekingによる自然言語Perception差そのものは知覚可能**である。
+
+### Opportunity / Danger self-rating
+
+一方、自然言語と同一生成で出力している
+Opportunity / Danger自己評定は、
+
+- all-zeroをfresh liveでも繰り返す
+- 自然言語と逆方向になる場合がある
+- blind再採点と0 / 12しか完全一致しない
+
+ため、Semantic-Score Consistencyに明確な問題がある。
+
+### Cache
+
+fresh live 6回中5回でexact all-zero pairが再現したため、
+ローカルresponse cacheはall-zero patternの原因ではない。
 
 ## Interpretation boundary
 
-この観察だけでPF-EXP-0001の研究結果を再判定しない。
+この観察だけでPF-EXP-0001を再判定しない。
 
-現行MVPでは自然言語表現と0–4の定量値を同じLLM呼び出しで生成しているため、まずはCharacter App側の測定・表現整合性の問題として扱う。
+特に今回のblind EvaluatorはGeneratorとは別API呼び出しであり、
+condition情報も隠しているが、
 
-また、VBおよびRelationshipで今回mismatchが0 / 3だったことは、それらの定量指標一般の妥当性を証明するものではない。あくまで今回の初回手触り確認で顕著な違和感が記録されなかったことを示す。
+**Generator / Evaluatorはいずれも `gpt-5.6-luna`**
+
+である。
+
+したがって同一モデル系の意味的一貫性が結果を強めた可能性は残る。
+blind evaluator score自体をground truthとは扱わない。
+
+## Current hypothesis
+
+現時点で優先度が高い原因候補は、
+
+1. 自然言語生成とOpportunity / Danger自己評定を
+   同一LLM呼び出しで同時生成していること
+2. Opportunity / Dangerの0–4尺度が生成prompt内で
+   十分operationalizeされていないこと
+
+である。
+
+High / Lowに合わせるために、
+期待する数値関係を生成promptへ埋め込まない。
 
 ## Next questions
 
-1. Seekingの `Opportunity = 0 / Danger = 0` はキャッシュ済み結果固有か、新規生成でも再現するか。
-2. 自然言語生成と定量自己評定を同一LLM呼び出しで行うことが不整合の原因か。
-3. Opportunity / Dangerのoperationalization自体に曖昧さがあるか。
-4. 定量値を別Evaluatorで評価した場合、人間評定との整合性は改善するか。
-5. 通常のLab ViewでOpportunity / Dangerをどの程度強く表示すべきか。
+1. 数値評価をGeneratorから分離するとSemantic-Score Consistencyは改善するか
+2. Generatorとは異なるEvaluator modelでも同じ傾向が再現するか
+3. Human scoreと独立Evaluator scoreの一致度はどの程度か
+4. Opportunity / DangerをCharacter内部状態として扱うべきか、
+   それとも観察・評価のための補助指標として扱うべきか
 
 ## Current app response
 
-スコアを直ちに人間評価へ合わせて修正せず、不一致事例を蓄積する。
+現時点では生成promptを期待結果へ合わせて修正しない。
 
-High / Low条件に一致するよう大小関係をプロンプトで強制しない。期待結果を生成側へ埋め込まず、原因の切り分けと評価方式の見直しを別Issueで検討する。
+まず数値評価を生成から分離する方式を比較し、
+その結果を見てLab View上のOpportunity / Dangerの扱いを再検討する。
