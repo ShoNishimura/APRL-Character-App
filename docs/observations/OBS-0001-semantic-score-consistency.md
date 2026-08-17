@@ -131,6 +131,47 @@ Record:
 
 - `data/diagnostics/aprl-character-app-seeking-blind-evaluator-2026-08-16.json`
 
+## Follow-up 3 — App-integrated separate-pass scoring
+
+PR #4で、Temperament LensのPerception生成と
+Opportunity / Danger評価をアプリ上でも分離した。
+
+Separate-pass evaluatorには以下を提示しない。
+
+- S High / S Low
+- Temperament値
+- Original self-rating
+- 仮説
+- 期待される大小関係
+
+Blind Handfeel保存後にLab Viewを開いたときだけ、
+同じ生成済みPerceptionを別API callで0–4の絶対尺度により評価する。
+
+Seeking 3 Situationの初期動作確認では、
+Original self-ratingは3ケースすべて
+S Low / S Highとも O0 / D0 だった。
+
+| Situation | S Low Separate-pass | S High Separate-pass |
+|---|---:|---:|
+| 新しい活動 | O1 / D1 | **O4 / D0** |
+| 新しい方法 | O0 / D1 | **O4 / D0** |
+| 未知の場所 | O2 / D0 | **O4 / D0** |
+
+今回の3ケースでは、
+Separate-pass ratingは自然言語Perceptionから人間が受け取る意味と概ね一致した。
+
+したがってCharacter App上では、
+
+**問題の中心はTemperamentによる自然言語Perception差そのものではなく、
+Perception生成と同一callで行っていたOpportunity / Danger自己評定の
+Semantic-Score Consistencyにある可能性が高まった。**
+
+数値評価を生成から分離することで、
+今回の3ケースではSemantic-Score Consistencyが明確に改善した。
+
+ただしGenerator / Evaluatorはいずれも `gpt-5.6-luna` であり、
+Separate-pass scoreをground truthとは扱わない。
+この観察だけでAPRL研究モデルやPF-EXP-0001を再判定しない。
 ## Current interpretation
 
 現時点では次のように切り分ける。
@@ -192,15 +233,17 @@ High / Lowに合わせるために、
 
 ## Next questions
 
-1. 数値評価をGeneratorから分離するとSemantic-Score Consistencyは改善するか
-2. Generatorとは異なるEvaluator modelでも同じ傾向が再現するか
-3. Human scoreと独立Evaluator scoreの一致度はどの程度か
-4. Opportunity / DangerをCharacter内部状態として扱うべきか、
+1. Generatorとは異なるEvaluator modelでも同じ傾向が再現するか
+2. Human scoreとSeparate-pass scoreの一致度はどの程度か
+3. Opportunity / DangerをCharacter内部状態として扱うべきか、
    それとも観察・評価のための補助指標として扱うべきか
 
 ## Current app response
 
 現時点では生成promptを期待結果へ合わせて修正しない。
 
-まず数値評価を生成から分離する方式を比較し、
-その結果を見てLab View上のOpportunity / Dangerの扱いを再検討する。
+生成と数値評価を分離する方式をTemperament Lensへ導入し、
+今回の3ケースではSemantic-Score Consistencyの改善を確認した。
+
+今後は別Evaluator modelおよびHuman scoreとの一致を確認し、
+Lab View上のOpportunity / Dangerの位置づけを再検討する。
